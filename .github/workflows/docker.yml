@@ -10,10 +10,10 @@ on:
       - "go.sum"
       - ".github/workflows/*.yml"
     tags:
-      - 'v*'
+      - "v*"
   pull_request:
     branches:
-      - 'master'
+      - "master"
 jobs:
   push_to_registry:
     name: Push Docker image to Docker Hub
@@ -38,7 +38,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          platforms: linux/arm/v7,linux/arm64,linux/amd64,linux/s390x
+          platforms: linux/arm64,linux/amd64
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
