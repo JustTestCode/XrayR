@@ -7,6 +7,12 @@ import (
 	"github.com/xtls/xray-core/infra/conf"
 )
 
+const (
+	UserNotModified = "users not modified"
+	NodeNotModified = "node not modified"
+	RuleNotModified = "rules not modified"
+)
+
 // Config API config
 type Config struct {
 	APIHost             string  `mapstructure:"ApiHost"`
@@ -14,6 +20,7 @@ type Config struct {
 	Key                 string  `mapstructure:"ApiKey"`
 	NodeType            string  `mapstructure:"NodeType"`
 	EnableVless         bool    `mapstructure:"EnableVless"`
+	VlessFlow           string  `mapstructure:"VlessFlow"`
 	Timeout             int     `mapstructure:"Timeout"`
 	SpeedLimit          float64 `mapstructure:"SpeedLimit"`
 	DeviceLimit         int     `mapstructure:"DeviceLimit"`
@@ -41,27 +48,26 @@ type NodeInfo struct {
 	Path              string
 	EnableTLS         bool
 	EnableVless       bool
+	VlessFlow         string
 	CypherMethod      string
 	ServerKey         string
 	ServiceName       string
 	Header            json.RawMessage
 	NameServerConfig  []*conf.NameServerConfig
+	EnableREALITY     bool
+	REALITYConfig     *REALITYConfig
 }
 
 type UserInfo struct {
-	UID           int
-	Email         string
-	Passwd        string
-	Port          uint32
-	Method        string
-	SpeedLimit    uint64 // Bps
-	DeviceLimit   int
-	Protocol      string
-	ProtocolParam string
-	Obfs          string
-	ObfsParam     string
-	UUID          string
-	AlterID       uint16
+	UID         int
+	Email       string
+	UUID        string
+	Passwd      string
+	Port        uint32
+	AlterID     uint16
+	Method      string
+	SpeedLimit  uint64 // Bps
+	DeviceLimit int
 }
 
 type OnlineUser struct {
@@ -91,4 +97,15 @@ type DetectRule struct {
 type DetectResult struct {
 	UID    int
 	RuleID int
+}
+
+type REALITYConfig struct {
+	Dest             string
+	ProxyProtocolVer uint64
+	ServerNames      []string
+	PrivateKey       string
+	MinClientVer     string
+	MaxClientVer     string
+	MaxTimeDiff      uint64
+	ShortIds         []string
 }
